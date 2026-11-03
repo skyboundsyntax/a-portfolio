@@ -870,18 +870,18 @@ export default function App() {
           />
           <div className="explore-grid">
             {[
-              ["Agentic AI", "Systems that reason", "brain"],
-              ["Generative AI", "Ideas made visible", "sparkles"],
-              ["Full-Stack Systems", "From interface to data", "code"],
-              ["Machine Learning", "Patterns into insight", "database"],
-              ["Cybersecurity", "Secure by design", "shield"],
-              ["Productivity Tools", "Calm, useful software", "web"],
-              ["Open Source", "Build in public", "github"],
               [
                 "Space Systems Engineering",
                 "Technology beyond Earth",
                 "rocket",
               ],
+              ["Cybersecurity", "Secure by design", "shield"],
+              ["Machine Learning", "Patterns into insight", "database"],
+              ["Generative AI", "Ideas made visible", "sparkles"],
+              ["Agentic AI", "Systems that reason", "brain"],
+              ["Full-Stack Systems", "From interface to data", "code"],
+              ["Productivity Tools", "Calm, useful software", "web"],
+              ["Open Source", "Build in public", "github"],
             ].map(([title, sub, icon]) => (
               <article className="cap-card reveal visible" key={title}>
                 <Icon name={icon as IconName} />
