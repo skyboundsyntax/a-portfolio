@@ -1,6 +1,6 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react"
 
-type IconName = "arrow" | "brain" | "code" | "database" | "github" | "linkedin" | "mail" | "rocket" | "sparkles" | "web"
+type IconName = "arrow" | "brain" | "code" | "database" | "github" | "linkedin" | "mail" | "rocket" | "shield" | "sparkles" | "web"
 const paths: Record<IconName, ReactNode> = {
   arrow: (
     <>
@@ -45,6 +45,12 @@ const paths: Record<IconName, ReactNode> = {
       <path d="M9 12a13 13 0 0 1 13-10 13 13 0 0 1-10 13l-3-3Z" />
       <path d="M9 12H4s.5-3 2-4c1.5-1 5 0 5 0M12 15v5s3-.5 4-2c1-1.5 0-5 0-5" />
       <circle cx="16" cy="8" r="1" />
+    </>
+  ),
+  shield: (
+    <>
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+      <path d="m9 12 2 2 4-4" />
     </>
   ),
   sparkles: (
@@ -165,33 +171,6 @@ const projects = [
     art: "lab",
   },
 ]
-const journey = [
-  [
-    "2022",
-    "Class 10 · 95.4%",
-    "Completed secondary education at St Xavier’s Institution with a strong academic foundation.",
-  ],
-  [
-    "2024",
-    "Class 12 Science · 81.8%",
-    "Graduated from Kalyani Public School and turned a curiosity for technology into a clear direction.",
-  ],
-  [
-    "2025",
-    "B.Tech CSE (AI & ML)",
-    "Joined D. Y. Patil University, Ambi, Pune to study intelligent systems and software engineering.",
-  ],
-  [
-    "Now",
-    "Building & Exploring",
-    "Creating full-stack projects while studying machine learning, GenAI, agentic AI, and databases.",
-  ],
-  [
-    "2029",
-    "The Horizon",
-    "Working toward graduation and a career building useful, thoughtful, intelligent software.",
-  ],
-]
 function Chapter({
   number,
   name,
@@ -233,6 +212,51 @@ const aboutPhrases = [
   "follow the why",
 ]
 
+const experiencePhrases = [
+  "small steps",
+  "hands-on learning",
+  "real-world practice",
+  "focused growth",
+  "meaningful milestones",
+]
+
+const timelineItems = [
+  {
+    date: "2022",
+    title: "Class 10 · 95.4%",
+    copy: "Completed secondary education at St Xavier’s Institution with a strong academic foundation.",
+  },
+  {
+    date: "2024",
+    title: "Class 12 Science · 81.8%",
+    copy: "Graduated from Kalyani Public School and turned a curiosity for technology into a clear direction.",
+  },
+  {
+    date: "2025",
+    title: "B.Tech CSE (AI & ML)",
+    copy: "Joined D. Y. Patil University, Ambi, Pune to study intelligent systems and software engineering.",
+  },
+  {
+    date: "09 Jun — 30 Aug 2026",
+    eyebrow: "Professional Experience",
+    title: "Web Development Intern · NIT Sikkim",
+    copy: "Completed a supervised summer internship in web development using Python with the Department of Electronics and Communication Engineering, gaining practical exposure through applied development work.",
+    tags: ["Python", "Web Development", "Practical Training"],
+    link: "/Samata-Das-NIT-Sikkim-Internship-Certificate.pdf",
+    featured: true,
+  },
+  {
+    date: "Now",
+    title: "Building & Exploring",
+    copy: "Creating full-stack projects while studying machine learning, GenAI, agentic AI, and databases.",
+  },
+  {
+    date: "2029",
+    title: "The Horizon",
+    copy: "Working toward graduation and a career building useful, thoughtful, intelligent software.",
+  },
+]
+
 function DisintegratingWord({
   word,
   phase,
@@ -240,7 +264,7 @@ function DisintegratingWord({
 }: {
   word: string
   phase: "in" | "out"
-  kind: "quality" | "catalyst" | "idea"
+  kind: "quality" | "catalyst" | "idea" | "experience"
 }) {
   return (
     <span className={`dynamic-word ${kind} ${phase}`} aria-label={word}>
@@ -293,6 +317,10 @@ export default function App() {
   const [wordPhase, setWordPhase] = useState<"in" | "out">("in")
   const [aboutPhraseIndex, setAboutPhraseIndex] = useState(0)
   const [aboutWordPhase, setAboutWordPhase] = useState<"in" | "out">("in")
+  const [experiencePhraseIndex, setExperiencePhraseIndex] = useState(0)
+  const [experienceWordPhase, setExperienceWordPhase] = useState<"in" | "out">(
+    "in",
+  )
   useEffect(() => {
     let swapTimer: ReturnType<typeof setTimeout>
     const cycleTimer = setInterval(() => {
@@ -302,6 +330,22 @@ export default function App() {
         setWordPhase("in")
       }, 680)
     }, 3800)
+    return () => {
+      clearInterval(cycleTimer)
+      clearTimeout(swapTimer)
+    }
+  }, [])
+  useEffect(() => {
+    let swapTimer: ReturnType<typeof setTimeout>
+    const cycleTimer = setInterval(() => {
+      setExperienceWordPhase("out")
+      swapTimer = setTimeout(() => {
+        setExperiencePhraseIndex(
+          (index) => (index + 1) % experiencePhrases.length,
+        )
+        setExperienceWordPhase("in")
+      }, 680)
+    }, 4000)
     return () => {
       clearInterval(cycleTimer)
       clearTimeout(swapTimer)
@@ -388,7 +432,9 @@ export default function App() {
       dot.classList.add("visible")
 
       const target = event.target as HTMLElement
-      const interactive = target.closest("a, button, .cap-card, .project")
+      const interactive = target.closest(
+        "a, button, .cap-card, .project, .experience-entry",
+      )
       ring.classList.toggle("active", Boolean(interactive))
 
       if (reduceMotion) return
@@ -456,7 +502,7 @@ export default function App() {
               "About",
               "Capabilities",
               "Projects",
-              "Journey",
+              "Experience",
               "Exploration",
               "Contact",
             ].map((item) => (
@@ -477,7 +523,10 @@ export default function App() {
               </a>
             ))}
           </nav>
-          <a className="hello" href="#contact">
+          <a
+            className="hello"
+            href="mailto:samata.das236@gmail.com?subject=Hello%20Samata%20%E2%80%94%20Portfolio%20Inquiry"
+          >
             Say Hello <span>→</span>
           </a>
           <button
@@ -734,30 +783,73 @@ export default function App() {
         </div>
       </section>
 
-      <section id="journey" className="fog section">
+      <section id="experience" className="fog section experience">
         <div className="container">
           <Chapter
             number="05"
             name="The Roadmap"
-            eyebrow="My Journey"
+            eyebrow="Experience Timeline"
             title={
               <>
-                A timeline of <em>small steps</em> and patient growth.
+                A journey shaped through{" "}
+                <DisintegratingWord
+                  word={experiencePhrases[experiencePhraseIndex]}
+                  phase={experienceWordPhase}
+                  kind="experience"
+                />{" "}
+                and practical growth.
               </>
             }
           />
-          <ol className="timeline">
-            {journey.map(([year, title, copy]) => (
-              <li className="reveal" key={year}>
-                <span className="dot" />
-                <small>{year}</small>
-                <h3>{title}</h3>
-                <p>{copy}</p>
+          <ol className="experience-timeline">
+            {timelineItems.map((item, index) => (
+              <li
+                className={`experience-entry reveal visible ${
+                  item.featured ? "featured" : ""
+                }`}
+                key={`${item.date}-${item.title}`}
+              >
+                <div className="timeline-date">
+                  <span>{item.date}</span>
+                  <small>{String(index + 1).padStart(2, "0")}</small>
+                </div>
+                <div className="timeline-track">
+                  <span>{item.featured ? <Icon name="web" /> : null}</span>
+                </div>
+                <article>
+                  {item.eyebrow ? (
+                    <div className="entry-eyebrow">
+                      {item.eyebrow}
+                      <span>
+                        <i /> Completed
+                      </span>
+                    </div>
+                  ) : null}
+                  <h3>{item.title}</h3>
+                  <p>{item.copy}</p>
+                  {item.tags ? (
+                    <div className="experience-tags">
+                      {item.tags.map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </div>
+                  ) : null}
+                  {item.link ? (
+                    <a
+                      className="credential-link"
+                      href={item.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View supporting document <Icon name="arrow" />
+                    </a>
+                  ) : null}
+                </article>
               </li>
             ))}
           </ol>
           <div className="roadmap">
-            <Icon name="rocket" /> A roadmap to the stars
+            <Icon name="rocket" /> Learning, building, and moving forward
           </div>
         </div>
       </section>
@@ -782,10 +874,16 @@ export default function App() {
               ["Generative AI", "Ideas made visible", "sparkles"],
               ["Full-Stack Systems", "From interface to data", "code"],
               ["Machine Learning", "Patterns into insight", "database"],
+              ["Cybersecurity", "Secure by design", "shield"],
               ["Productivity Tools", "Calm, useful software", "web"],
               ["Open Source", "Build in public", "github"],
+              [
+                "Space Systems Engineering",
+                "Technology beyond Earth",
+                "rocket",
+              ],
             ].map(([title, sub, icon]) => (
-              <article className="cap-card reveal" key={title}>
+              <article className="cap-card reveal visible" key={title}>
                 <Icon name={icon as IconName} />
                 <div>
                   <h3>{title}</h3>
