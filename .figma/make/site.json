@@ -1,0 +1,10 @@
+{
+  "description": "A personalized portfolio showcases your resume, experience, and skills in a polished format to help employers and clients discover your work.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
